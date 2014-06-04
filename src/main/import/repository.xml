@@ -12,7 +12,16 @@
                 <files jcr:primaryType="jnt:folder"/>
                 <contents jcr:primaryType="jnt:contentFolder"/>
                 <templates j:rootTemplatePath="/base" jcr:primaryType="jnt:templatesFolder">
-                    <files jcr:primaryType="jnt:folder"/>
+                    <files jcr:primaryType="jnt:folder">
+                        <visibilityStatusGreen.png j:height="16"
+                                          j:width="16"
+                                          jcr:mixinTypes="jmix:image"
+                                          jcr:primaryType="jnt:file">
+                            <jcr:content jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                            <thumbnail jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                            <thumbnail2 jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                        </visibilityStatusGreen.png>
+                    </files>
                     <contents jcr:primaryType="jnt:contentFolder"/>
                     <site-settings-base j:hiddenTemplate="false"
                                 j:view="siteSettings"
@@ -24,6 +33,7 @@
                         <visibility-dashboard j:applyOn="jnt:virtualsite"
                                      j:defaultTemplate="false"
                                      j:hiddenTemplate="false"
+                                     j:icon="/modules/visibilitydashboard/templates/files/visibilityStatusGreen.png"
                                      jcr:primaryType="jnt:contentTemplate">
                             <j:translation_en jcr:language="en"
                                     jcr:mixinTypes="mix:title"
