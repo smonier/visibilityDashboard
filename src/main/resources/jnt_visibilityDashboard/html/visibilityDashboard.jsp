@@ -6,6 +6,7 @@
 <%@ taglib prefix="utility" uri="http://www.jahia.org/tags/utilityLib"%>
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib"%>
 <%@ taglib prefix="functions" uri="http://www.jahia.org/tags/functions"%>
+<%@ taglib prefix="visibility" uri="http://www.jahia.org/tags/visibilityLib"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="uiComponents"
   uri="http://www.jahia.org/tags/uiComponentsLib"%>
@@ -20,29 +21,22 @@
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <jsp:useBean id="now" class="java.util.Date"/>
 
-<template:addResources type="javascript"
-                       resources="jquery.min.js,jquery-ui.min.js,jquery.blockUI.js,workInProgress.js,admin-bootstrap.js,jquery.dataTables.min.js" />
-<template:addResources type="css"
-                       resources="admin-bootstrap.css,bootstrap.min.css" />
-<template:addResources type="css"
-                       resources="jquery-ui.smoothness.css,jquery-ui.smoothness-jahia.css" />
+<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js,admin-bootstrap.js,bootstrap-filestyle.min.js,jquery.metadata.js,jquery.tablesorter.js,jquery.tablecloth.js"/>
+<template:addResources type="css" resources="jquery-ui.smoothness.css,jquery-ui.smoothness-jahia.css,tablecloth.css"/>
+<template:addResources type="javascript" resources="datatables/jquery.dataTables.js,i18n/jquery.dataTables-${currentResource.locale}.js,datatables/dataTables.bootstrap-ext.js"/>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        var providersTable = $('#visibilityContentTable');
 
-<script>
-  
-  
-  
-  $(document)
-  .ready(
-    function() {
-      
-      $('.data-table').dataTable({
-        "sDom" : "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-        "aLengthMenu": [[5, 10, 50, 100, -1], [5, 10, 50, 100, 'All']],
-        "iDisplayLength" : 5
-      });
-      
+        providersTable.dataTable({
+            "sDom": "<'row-fluid'<'span6'l><'span6 text-right'f>r>t<'row-fluid'<'span6'i><'span6 text-right'p>>",
+            "iDisplayLength": 5,
+            "sPaginationType": "bootstrap",
+            "aaSorting": [] //this option disable sort by default, the user steal can use column names to sort the table
+        });
     });
 </script>
+
 
 <c:set var="site" value="${renderContext.mainResource.node.resolveSite}" />
 
@@ -56,7 +50,7 @@
   <c:if test="${not empty visibilityContentList}">
     
     <table id="visibilityContentTable"
-           class="table table-bordered table-striped table-hover display data-table">
+           class="table table-striped table-bordered">
       <thead>
         <tr>
           <th width="3%">#</th>
@@ -67,8 +61,9 @@
           <th width="8%"><fmt:message
                                       key="visibilityDashboard.table.condition" /></th>
           <th width="34%"><fmt:message
-                                       key="visibilityDashboard.table.status" />
-             <fmt:formatDate value="${now}" type="both" dateStyle="full" timeStyle="medium"/></th>
+                                       key="visibilityDashboard.table.status" /><br/>
+            <fmt:setLocale value="${currentResource.locale}" />
+            <fmt:formatDate value="${now}" type="both" dateStyle="full" timeStyle="medium"/></th>
         </tr>
       </thead>
       <tbody>
@@ -89,21 +84,29 @@
               </a>
             </td>
             <td width="30%">
-              <c:out value="${visibilityContent.parent.displayableName}" />
+              <c:out value="${visibilityContent.parent.displayableName}" /> (<i><c:out value="${visibilityContent.parent.primaryNodeTypeName}" /></i>)
             </td>
-            <td width="28%">
+            <td width="23%">
               <c:forEach items="${visibilityContent.nodes}" var="subchild">
                 <c:if test="${jcr:isNodeType(subchild, 'jnt:startEndDateCondition')}">
-                  <li> <b>Start and End Date: </b>
+                  <li> <b><fmt:message key="visibilityDashboard.startEndDate" /></b>
                     <jcr:nodeProperty node="${subchild}" name="start" var="start"/>
                     <jcr:nodeProperty node="${subchild}" name="end" var="end"/>
-                    From <fmt:formatDate type="date" value="${start.date.time}" /> to
-                    <fmt:formatDate type="date" value="${end.date.time}" />
+                    <c:if test="${not empty start}">
+                      <fmt:message key="visibilityDashboard.from" />
+                      <fmt:formatDate type="date" value="${start.date.time}" />
+                    </c:if>
+                    
+                    <c:if test="${not empty end}">
+                      &nbsp;<fmt:message key="visibilityDashboard.to" />
+                      <fmt:formatDate type="date" value="${end.date.time}" />
+                    </c:if>
+                    
                     
                   </li>
                 </c:if>
                 <c:if test="${jcr:isNodeType(subchild, 'jnt:dayOfWeekCondition')}">
-                  <li> <b>Day of the Week: </b>
+                  <li> <b><fmt:message key="visibilityDashboard.dayOfWeek" /></b>
                     <jcr:nodeProperty node="${subchild}" name="dayOfWeek" var="dayOfWeek"/>
                     <c:forEach items="${dayOfWeek}" var="day">
                       <c:out value="${day.string}" />,
@@ -111,36 +114,36 @@
                   </li>
                 </c:if>
                 <c:if test="${jcr:isNodeType(subchild, 'jnt:timeOfDayCondition')}">
-                  <li> <b>Time of the Day: </b>
+                  <li> <b><fmt:message key="visibilityDashboard.timeOfDay" /></b>
                     <jcr:nodeProperty node="${subchild}" name="startHour" var="startHour"/>
                     <jcr:nodeProperty node="${subchild}" name="startMinute" var="startMinute"/>
                     <jcr:nodeProperty node="${subchild}" name="endHour" var="endHour"/>
                     <jcr:nodeProperty node="${subchild}" name="endMinute" var="endMinute"/>
-                    From  <c:out value="${startHour.string}:${startMinute.string}" />  to <c:out value="${endHour.string}:${endMinute.string}" />
+                    <c:if test="${not empty startHour}">
+                      <fmt:message key="visibilityDashboard.fromHour" />
+                      <c:out value="${startHour.string}:${startMinute.string}" />
+                    </c:if>
+                    <c:if test="${not empty endHour}">
+                      &nbsp;<fmt:message key="visibilityDashboard.toHour" />
+                      <c:out value="${endHour.string}:${endMinute.string}" />
+                    </c:if>
+                    
                   </li>
                 </c:if>
               </c:forEach>
               
             </td>
-            <td width="15%">
+            <td width="20%"  style="text-align: center;vertical-align: middle;">
               
-              <fmt:formatDate var="date"
-                              value="${now}"
-                              type="date"/>
-              
-              <fmt:formatDate var="time"
-                              value="${now}"
-                              pattern="HH:mm" />
-              
-              <fmt:formatDate var="day"
-                              value="${now}"
-                              pattern="E" />
-
-              <c:if test="${(now lt end.date.time) && (now gt start.date.time)}">
-              ${day}
+              <c:choose>
+                <c:when test="${visibility:getVisibilityStatus(visibilityContent.parent)}">
                   <img src="<c:url value='${url.currentModule}/img/visibilityStatusGreen.png'/>" />
-              </c:if>
-
+                </c:when>
+                <c:otherwise>
+                  <img src="<c:url value='${url.currentModule}/img/visibilityStatusRed.png'/>" />
+                </c:otherwise>
+              </c:choose>
+              
               
             </td>
           </tr>
