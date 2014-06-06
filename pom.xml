@@ -88,6 +88,9 @@
     <connection>scm:git:git@github.com:smonier/visibilityDashboard.git</connection>
     <developerConnection>scm:git:git@github.com:smonier/visibilityDashboard.git</developerConnection>
   </scm>
+  <properties>
+    <jahia-private-app-store>store.jahia.com</jahia-private-app-store>
+  </properties>
   <repositories>
     <repository>
       <releases>
