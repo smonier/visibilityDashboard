@@ -24,6 +24,7 @@
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js,admin-bootstrap.js,bootstrap-filestyle.min.js,jquery.metadata.js,jquery.tablesorter.js,jquery.tablecloth.js"/>
 <template:addResources type="css" resources="jquery-ui.smoothness.css,jquery-ui.smoothness-jahia.css,tablecloth.css"/>
 <template:addResources type="javascript" resources="datatables/jquery.dataTables.js,i18n/jquery.dataTables-${currentResource.locale}.js,datatables/dataTables.bootstrap-ext.js"/>
+
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         var providersTable = $('#visibilityContentTable');
@@ -34,7 +35,10 @@
             "sPaginationType": "bootstrap",
             "aaSorting": [] //this option disable sort by default, the user steal can use column names to sort the table
         });
+      
     });
+  
+  	
 </script>
 
 
@@ -85,6 +89,31 @@
             </td>
             <td width="30%">
               <c:out value="${visibilityContent.parent.displayableName}" /> (<i><c:out value="${visibilityContent.parent.primaryNodeTypeName}" /></i>)
+            	
+              
+              <button type="button"
+                      class="btn btn-primary btn-${visibilityContent.parent.UUID}"
+                      id="btn-${visibilityContent.parent.UUID}" data-toggle="modal"
+                      data-target="#${visibilityContent.parent.UUID}" style="float:right">
+                <i class="icon-info-sign icon-white"></i><span><fmt:message key="visibilityDashboard.viewContent" /></span>
+              </button>
+              
+                        <!-- Modal -->
+								<div class="modal fade" id="${visibilityContent.parent.UUID}" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-hidden="true">&times;</button>
+												<template:module node="${visibilityContent.parent}" editable="false"/>
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+
+											</div>
+										</div>
+									</div>
+								</div>
             </td>
             <td width="23%">
               <c:forEach items="${visibilityContent.nodes}" var="subchild">
@@ -148,6 +177,8 @@
             </td>
           </tr>
           
+                        
+									
         </c:forEach>
       </tbody>
     </table>
