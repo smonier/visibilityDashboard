@@ -58,13 +58,13 @@
       <thead>
         <tr>
           <th width="3%">#</th>
-          <th width="45%"><fmt:message
-                                       key="visibilityDashboard.table.page" /></th>
           <th width="10%"><fmt:message
+                                       key="visibilityDashboard.table.page" /></th>
+          <th width="35%"><fmt:message
                                        key="visibilityDashboard.table.content" /></th>
-          <th width="8%"><fmt:message
+          <th width="23%"><fmt:message
                                       key="visibilityDashboard.table.condition" /></th>
-          <th width="34%"><fmt:message
+          <th width="20%"><fmt:message
                                        key="visibilityDashboard.table.status" /><br/>
             <fmt:setLocale value="${currentResource.locale}" />
             <fmt:formatDate value="${now}" type="both" dateStyle="full" timeStyle="medium"/></th>
@@ -81,13 +81,13 @@
               <c:set var="count" value="${count + 1}" scope="page" />
               <c:out value="${count}" />
             </td>
-            <td width="15%">
+            <td width="10%">
               <c:set var="pageNode" value="${jcr:getParentsOfType(visibilityContent, 'jnt:page')}"/>
-              <a href='<c:url value="${url.base}${pageNode[0].path}.html"/>' target="_blank">
+              <a href='<c:url value="${url.base}${pageNode[0].path}.html"/>' target="_blank" title="view ${visibilityContent.parent.displayableName} in context">
                 <c:out value="${pageNode[0].displayableName}" />
               </a>
             </td>
-            <td width="30%">
+            <td width="35%">
               <c:out value="${visibilityContent.parent.displayableName}" /> (<i><c:out value="${visibilityContent.parent.primaryNodeTypeName}" /></i>)
             	
               
