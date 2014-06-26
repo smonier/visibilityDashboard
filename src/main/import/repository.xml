@@ -21,6 +21,14 @@
                             <thumbnail jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
                             <thumbnail2 jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
                         </visibilityStatusGreen.png>
+                        <element_timex16.png j:height="15"
+                                    j:width="16"
+                                    jcr:mixinTypes="jmix:image"
+                                    jcr:primaryType="jnt:file">
+                            <jcr:content jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                            <thumbnail jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                            <thumbnail2 jcr:mimeType="image/png" jcr:primaryType="jnt:resource"/>
+                        </element_timex16.png>
                     </files>
                     <contents jcr:primaryType="jnt:contentFolder"/>
                     <site-settings-base j:hiddenTemplate="false"
@@ -33,7 +41,7 @@
                         <visibility-dashboard j:applyOn="jnt:virtualsite"
                                      j:defaultTemplate="false"
                                      j:hiddenTemplate="false"
-                                     j:icon="/modules/visibilitydashboard/templates/files/visibilityStatusGreen.png"
+                                     j:icon="/modules/visibilitydashboard/templates/files/element_timex16.png"
                                      j:requiredPermissionNames="adminSiteSettingsVisibilityDashboard"
                                      jcr:primaryType="jnt:contentTemplate">
                             <j:translation_en jcr:language="en"
