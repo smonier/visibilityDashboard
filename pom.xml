@@ -82,7 +82,7 @@
   <artifactId>visibilitydashboard</artifactId>
   <version>2.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>visibilityDashboard</name>
+  <name>Visibility Dashboard</name>
   <description>This is the custom module (visibilityDashboard) for running on a Digital Factory server.</description>
   <scm>
     <connection>scm:git:git@github.com:smonier/visibilityDashboard.git</connection>
