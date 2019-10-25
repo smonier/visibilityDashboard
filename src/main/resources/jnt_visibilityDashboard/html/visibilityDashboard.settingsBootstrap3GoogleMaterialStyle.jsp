@@ -36,11 +36,15 @@
 </template:addResources>
 
 
+<div class="page-header">
  <h2>
   <fmt:message key="siteSettings.label.visibilityDashboardTitle" />
   - ${fn:escapeXml(site.displayableName)}
 </h2>
+</div>
 
+<div class="panel panel-default">
+    <div class="panel-body">
 
 <c:set var="site" value="${renderContext.mainResource.node.resolveSite}" />
 <c:set var="count" value="0" scope="page" />
@@ -190,4 +194,7 @@
 
 
 
+</div>
+
+    </div>
 </div>
